@@ -21,3 +21,9 @@ of assertion for each element separately
 ## Choose domain
 Since I want to learn on a complex UI with API, I choose TeamCity.
 I will be able to play with Selenide-related features, emails as well as API generation and calling.
+
+## Architecture comments
+### Flows
+I added the concept of "flow" to hide direct interaction with UI component from test
+A flow should describe steps of a user scenario in a readable way.
+"Flow is not page related, it is focused on user scenarios, so it can use several pages as well as part of a single page.
