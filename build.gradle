@@ -1,39 +1,39 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
-    id 'io.qameta.allure' version '2.9.3'
+    id "java"
+    id "org.jetbrains.kotlin.jvm" version "1.7.20"
+    id "io.qameta.allure" version "2.9.3"
 }
 
-group 'com.makrol'
-version '1.0-SNAPSHOT'
+group "com.makrol"
+version "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 ext {
-    allureVersion = '2.20.1'
-    junitVersion = '5.9.1'
+    allureVersion = "2.20.1"
+    junitVersion = "5.9.1"
 }
 
-sourceCompatibility = '18'
-targetCompatibility = '18'
+sourceCompatibility = "18"
+targetCompatibility = "18"
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    options.encoding = "UTF-8"
 }
 
 [compileKotlin, compileTestKotlin].forEach {
     it.kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = "11"
     }
 }
 
 dependencies {
-    testImplementation('com.codeborne:selenide:6.10.1')
-    testImplementation("io.qameta.allure:allure-selenide:${allureVersion}")
-    testImplementation('org.slf4j:slf4j-simple:1.7.30')
+    //Test implementation
+    testImplementation("com.codeborne:selenide:6.10.1")
 
+    //Tests organization
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
