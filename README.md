@@ -1,5 +1,5 @@
 # Self-education playground
-## Tasks regarding Kotlin & Java test tools:
+## Tasks regarding Kotlin & Java test tools
 * Generate & use API clients
 * How to work with deep nested element
 * Waits and assertions in Selenide
@@ -8,9 +8,9 @@
 * Reporting
 * Custom annotations
 * Reflection
-* Downloadind & Uploadind
-* Treating of emails
-* Work with cookie
+* Downloading & Uploading
+* Email processing
+* Work with cookies
 
 ## Tasks regarding test architecture
 * Add ability to validate elements, which have to be visible all time, without explicit call
