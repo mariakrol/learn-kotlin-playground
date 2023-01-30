@@ -11,6 +11,7 @@
 * Downloading & Uploading
 * Email processing
 * Work with cookies
+* Consider Kotlin-related alternatives for JUnit
 
 ## Tasks regarding test architecture
 * Add ability to validate elements, which have to be visible all time, without explicit call
