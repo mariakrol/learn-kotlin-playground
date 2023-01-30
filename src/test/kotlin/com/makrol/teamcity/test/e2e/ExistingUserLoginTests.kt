@@ -13,7 +13,8 @@ class ExistingUserLoginTests {
     @DisplayName("should lead to logged-in space started from the Projects page and give access to the Profile with expected user data")
     @Test
     fun shouldGoToLoggedInSpace() {
-        AnonymousTeamCityFlow()
+        AnonymousTeamCityFlow
+            .start()
             .login(login = "", password = "") //ToDo: create user before test
             .goToProfile()
             .validateUserInfo()

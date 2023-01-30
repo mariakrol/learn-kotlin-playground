@@ -30,8 +30,8 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
-    //Test implementation
-    testImplementation("com.codeborne:selenide:6.10.1")
+    //UI models implementation
+    implementation("com.codeborne:selenide:6.10.1")
 
     //Tests organization
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
