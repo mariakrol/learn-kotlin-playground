@@ -41,6 +41,9 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("org.slf4j:slf4j-simple:2.0.5")
     testImplementation("io.qameta.allure:allure-selenide:${allureVersion}")
+
+    //Utilities
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
 }
 
 test {

@@ -4,6 +4,7 @@ import com.makrol.teamcity.test.user.scenario.flow.exceptions.UnexpectedFlowStat
 import com.makrol.teamcity.ui.common.Page
 import com.makrol.teamcity.ui.teamcity.page.objects.login.page.LoginPage
 import io.qameta.allure.Step
+import java.net.URL
 
 class AnonymousTeamCityFlow private constructor(currentPage: Page) : TeamCityUiFlow(currentPage) {
     @Step("Login to TeamCity")
@@ -19,7 +20,7 @@ class AnonymousTeamCityFlow private constructor(currentPage: Page) : TeamCityUiF
 
     companion object {
         fun start(): AnonymousTeamCityFlow {
-            val loginPage = LoginPage()
+            val loginPage = Page.open<LoginPage>(URL("http://localhost:8111/login.html"))
 
             return AnonymousTeamCityFlow(loginPage)
         }

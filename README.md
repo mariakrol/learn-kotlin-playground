@@ -24,6 +24,6 @@ I will be able to play with Selenide-related features, emails as well as API gen
 
 ## Architecture comments
 ### Flows
-I added the concept of "flow" to hide direct interaction with UI component from test
+I added the concept of "flow" to hide direct interaction with UI components from test.
 A flow should describe steps of a user scenario in a readable way.
-"Flow is not page related, it is focused on user scenarios, so it can use several pages as well as part of a single page.
+"Flow" is not page related entity, it is focused on user scenarios, so it can use several pages as well as part of a single page.
