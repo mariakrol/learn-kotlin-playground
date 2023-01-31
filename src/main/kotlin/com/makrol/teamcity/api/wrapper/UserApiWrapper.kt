@@ -16,13 +16,14 @@ class UserApiWrapper : BaseApiClient() {
 
     private val userApi: UserApi = UserApi(baseClient)
 
-    fun createUser(isAdminRights: Boolean = false, isEmailSet: Boolean = true): TestUser {
+    fun createUser(isAdminRights: Boolean = false, isEmailSet: Boolean = true, isNameSet: Boolean = true): TestUser {
         val userName = (if (isAdminRights) "admin" else "regular").appendRandomNumericPostfix()
+
         val newUser = User()
-        newUser.name = userName
         newUser.username = userName
-        newUser.password = defaultPassword
+        newUser.name = if (isNameSet) "Name of $userName" else ""
         newUser.email = if (isEmailSet) "$userName@example.com" else ""
+        newUser.password = defaultPassword
 
         if (isAdminRights) {
             newUser.roles = createAdminRole()
