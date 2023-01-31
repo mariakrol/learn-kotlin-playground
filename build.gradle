@@ -15,6 +15,7 @@ ext {
     allureVersion = "2.20.1"
     junitVersion = "5.9.1"
     hopliteVersion = "2.7.0"
+    okhttpVersion = "2.7.5"
 }
 
 sourceCompatibility = "18"
@@ -31,6 +32,14 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
+    //open api client generation
+    implementation("io.gsonfire:gson-fire:1.8.5")
+    implementation("com.squareup.okhttp:okhttp:${okhttpVersion}")
+    implementation("com.squareup.okhttp:logging-interceptor:${okhttpVersion}")
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
+    implementation("io.swagger:swagger-annotations:1.5.24")
+    implementation("org.threeten:threetenbp:1.3.6")
+
     //UI models implementation
     implementation("com.codeborne:selenide:6.10.1")
 

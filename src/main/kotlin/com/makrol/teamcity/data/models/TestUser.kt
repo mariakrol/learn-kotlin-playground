@@ -1,12 +1,13 @@
 package com.makrol.teamcity.data.models
 
-class TestUser(
-    val userName: String,
-    private val name: String,
-    private val email: String,
-    var password: String,
-    val isAdmin: Boolean
-) {
+import com.makrol.teamcity.api.swagger.client.model.User
+
+class TestUser(val user: User, var password: String, val isAdmin: Boolean) {
+
+    val userName: String = user.username ?: ""
+    val name: String = user.name ?: ""
+    private val email: String = user.email ?: ""
+
     fun toProfileInfo(): ProfileInfo {
         return ProfileInfo(userName, name, email)
     }

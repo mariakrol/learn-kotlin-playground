@@ -40,7 +40,7 @@ We need to be able to use the test system in any environment.
 In this case, we will have dynamic hosts, which must be specified in a config and a path to a page that should not depend on where the system is deployed.
 The custom annotation @PageUrlPath chains the path and associated page model.
 
-### Localisation
+### Localization
 Since some text UI elements can be fully qualified by text only (especially collection items, such as menu items, breadcrumbs, and sidebar items).
 I decided to implement localization support to be able to support any new language as soon as needed.
 I came up with 3 concepts based on the comments.
@@ -56,7 +56,7 @@ We can use one annotation for the whole PageObject with a path to the file (e.g.
 Each inner element needs to have an identifier to help find the localized text in the file.
 This approach would be slightly slower than the previous one.
 But we can lazily parse the whole file on the first request and store the localization model with a link to the PageObject.
-This will save time and we will not have to parse the file every time.
+This will save time, and we will not have to parse the file every time.
 
 #### Concept 3: Mix
 In this case, we still support a few languages, but some of our localized texts are very, very long, and we can mix approaches. Short labels can be stored directly in attributes, and long labels can be moved to a file.
@@ -65,3 +65,22 @@ So an attribute for long text elements will store the path to a file with a spec
 #### What to choose?
 Since TeamCity is only localized in English, localization itself is not required for the current system.
 So approach #2 is totally useless here, but since I want to try to do localized tests, and this is not commercial development, but educational, I will use the first one (there are no long texts on the TeamCity UI to use #3).
+
+### Generating and wrapping API
+I faced several problems when generating the API client for TeamCity because the API has numerous methods and associated models.
+I tried to generate the client using the online Swagger generator to practice with usages separately, without any additional code.
+Since TeamCity API contains some models that interfere with Java classes (Type and File) in case of Java generator, client "out of the box" was incorrect.
+I tried to use prefix for model, but without success, models were created with new names, but all usages were not affected.
+I found a common way for such situations - change the name of the broken type in YAML. The second way is to fix the generated code. Since there were not so hudge number of errors, I decided to fix generated code instead of changing YAML.
+After these manual fixes the client was ready and I was able to use it.
+I tried to use generator for Kotlin and it failed both for online and console generator. Only models were generated, not the client.
+When I tried to use Swagger generator and generate client in the build process of the current project, I got completely invalid code (for example, unexpected variable names).
+In some posts with tips for Kotlin, I found that Open API Generator produces valid clients for Kotlin.
+I tried to use it, but it also failed due to insufficient size of Java heap.
+Currently, I decided to use Java client that was already created and put it under version control.
+
+**TODO:**
+- [ ] Increase Java heap size
+- [ ] Add generation as a task and integrate it into the build process
+- [ ] Remove the generated client from version control.
+
