@@ -71,9 +71,9 @@ I faced several problems when generating the API client for TeamCity because the
 I tried to generate the client using the online Swagger generator to practice with usages separately, without any additional code.
 Since TeamCity API contains some models that interfere with Java classes (Type and File) in case of Java generator, client "out of the box" was incorrect.
 I tried to use prefix for model, but without success, models were created with new names, but all usages were not affected.
-I found a common way for such situations - change the name of the broken type in YAML. The second way is to fix the generated code. Since there were not so hudge number of errors, I decided to fix generated code instead of changing YAML.
-After these manual fixes the client was ready and I was able to use it.
-I tried to use generator for Kotlin and it failed both for online and console generator. Only models were generated, not the client.
+I found a common way for such situations - change the name of the broken type in YAML. The second way is to fix the generated code. Since there were not so huge number of errors, I decided to fix generated code instead of changing YAML.
+After these manual fixes the client was ready, and I was able to use it.
+I tried to use generator for Kotlin, and it failed both for online and console generator. Only models were generated, not the client.
 When I tried to use Swagger generator and generate client in the build process of the current project, I got completely invalid code (for example, unexpected variable names).
 In some posts with tips for Kotlin, I found that Open API Generator produces valid clients for Kotlin.
 I tried to use it, but it also failed due to insufficient size of Java heap.
