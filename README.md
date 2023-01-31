@@ -41,6 +41,32 @@ We need to be able to use the test system in any environment.
 In this case, we will have dynamic hosts, which must be specified in a config and a path to a page that should not 
 depend on where the system is deployed. The custom annotation @PageUrlPath chains the path and associated page model.
 
+#### Implicit and explicit checks of elements
+**Semi-implicit check**
+
+As TeamCity's UI is very complex, it can be quite inconvenient to check whether elements are available on the page or 
+not. The key point is that a large number of elements must be enabled or disabled by default, in addition to external 
+conditions. For elements, I implemented the concept of an "implicit" check. In fact, it is partially implicit because 
+the method that performs the validation has to be called from within a test. I deliberately did not include a call to 
+the method in the constructor, because searching for each element on a page can be quite time-consuming, and is not 
+needed for every regular test. So, we can have tests that focus on business logic separately from tests that simply 
+check whether elements are available on the UI or not. It will help to keep the completed user scenario green except 
+for the wrong state of an element, which is not required for the business logic in this case.
+To achieve this semi-implicit check, an element must be provided with an `@ImplicitCheck` annotation.
+**For example:**
+```Kotlin
+@ImplicitCheck(isVisible = true)
+private val userNameField = getChild(byId("username"))
+```
+The check itself can be done by calling of `validateElementsVisibility` extension method for the `UiElementContainer` 
+interface implemented by `Page` and `ComplexUiElement`.
+The method would iterate properties of passed complex object and assert state of an element.
+
+**Explicit check**
+Sometimes we want to check a specific element in a specific conditions. For example, an element would be available only
+after login with specific user, or while an operation is in progress.
+For that cases we can add explicit methods to check that elements.
+
 ### Localization
 Since some text UI elements can be fully qualified by text only (especially collection items, such as menu items, 
 breadcrumbs, and sidebar items) I decided to implement localization support to be able to adapt tests to any 
@@ -62,8 +88,8 @@ PageObject. This will save time, and we will not have to parse the file every ti
 
 #### Concept 3: Mix
 In this case, we still support a few languages, but some of our localized texts are very, very long, and we can mix 
-approaches. Short labels can be stored directly in attributes, and long labels can be moved to a file.
-So an attribute for long text elements will store the path to a file with a specific text, or a file with multiple texts
+approaches. Short labels can be stored directly in annotations, and long labels can be moved to a file.
+So an annotation for long text elements will store the path to a file with a specific text, or a file with multiple texts
 and the identification of the specific text.
 
 #### What to choose?
