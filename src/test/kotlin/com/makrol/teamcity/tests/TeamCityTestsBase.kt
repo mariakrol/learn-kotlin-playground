@@ -1,4 +1,4 @@
-package com.makrol.teamcity.test.e2e
+package com.makrol.teamcity.tests
 
 import com.makrol.teamcity.api.wrapper.UserApiWrapper
 import com.makrol.teamcity.data.models.TestUser
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(SoftAssertionsExtension::class)
 abstract class TeamCityTestsBase {
     @InjectSoftAssertions
-    protected lateinit var softly: SoftAssertions
+    protected lateinit var assertions: SoftAssertions
 
     protected lateinit var userToBeLoggedIn: TestUser
 

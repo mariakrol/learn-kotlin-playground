@@ -1,8 +1,9 @@
 package com.makrol.teamcity.ui.teamcity.page.objects.anonymous.login.page
 
+import com.makrol.teamcity.ui.annotations.ImplicitCheck
 import com.makrol.teamcity.ui.annotations.PageUrlPath
 import com.makrol.teamcity.ui.teamcity.page.objects.TeamCityPage
-import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.ProjectsPage
+import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.projects.page.ProjectsPage
 
 @PageUrlPath("/login.html")
 class LoginPage : TeamCityPage() {
@@ -12,5 +13,6 @@ class LoginPage : TeamCityPage() {
         return open { loginForm.login() }
     }
 
+    @ImplicitCheck(isVisible = true)
     private val loginForm = LoginForm()
 }

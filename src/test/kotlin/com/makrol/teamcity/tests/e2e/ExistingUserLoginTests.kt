@@ -1,6 +1,7 @@
-package com.makrol.teamcity.test.e2e
+package com.makrol.teamcity.tests.e2e
 
-import com.makrol.teamcity.test.user.scenario.flow.AnonymousTeamCityFlow
+import com.makrol.teamcity.tests.TeamCityTestsBase
+import com.makrol.teamcity.user.scenario.flow.AnonymousTeamCityFlow
 import io.qameta.allure.Feature
 import io.qameta.allure.Owner
 import org.junit.jupiter.api.DisplayName
@@ -23,7 +24,7 @@ class ExistingUserLoginTests : TeamCityTestsBase() {
         userToBeLoggedIn = userApi.createUser(isAdminRights, isEmailSet, isNameSet)
 
         AnonymousTeamCityFlow
-            .start(softly)
+            .start(assertions)
             .login(userToBeLoggedIn)
             .goToProfile()
             .validateUserInfo()

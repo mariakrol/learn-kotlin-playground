@@ -2,11 +2,15 @@ package com.makrol.teamcity.ui.common
 
 import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.Selenide
+import com.makrol.teamcity.utilities.localization.LocalizedItem
 import org.openqa.selenium.By
 
 //ToDo: derive from container
-abstract class Menu<TMenuItem>(private val itemsSource: Class<TMenuItem>, menuLocator: By, private val itemLocator: By)
-        where TMenuItem : Enum<TMenuItem>, TMenuItem : LocalizedItem {
+abstract class Menu<TMenuItem>(
+    private val itemsSource: Class<TMenuItem>,
+    menuLocator: By,
+    private val itemLocator: By
+) where TMenuItem : Enum<TMenuItem>, TMenuItem : LocalizedItem {
 
     protected val menuExpander = Selenide.element(menuLocator)
 

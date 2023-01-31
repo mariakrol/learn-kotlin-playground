@@ -1,4 +1,4 @@
-package com.makrol.teamcity.ui.common
+package com.makrol.teamcity.utilities.localization
 
 import com.makrol.teamcity.ui.annotations.LocalizedElement
 

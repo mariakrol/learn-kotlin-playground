@@ -4,7 +4,7 @@ import com.codeborne.selenide.Selenide
 import com.makrol.teamcity.utilities.helpers.constructByParameterlessCtor
 import java.net.URL
 
-abstract class Page {
+abstract class Page : UiElementContainer {
     companion object {
         inline fun <reified TPage : Page> open(openAction: () -> Unit): TPage {
             openAction.invoke()

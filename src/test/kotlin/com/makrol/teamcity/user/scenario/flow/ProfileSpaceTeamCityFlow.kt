@@ -1,4 +1,4 @@
-package com.makrol.teamcity.test.user.scenario.flow
+package com.makrol.teamcity.user.scenario.flow
 
 import com.makrol.teamcity.data.models.TestUser
 import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.profile.page.ProfilePage

@@ -1,28 +1,53 @@
 package com.makrol.teamcity.ui.teamcity.page.objects.loggedin.elements
 
 import com.codeborne.selenide.Selectors.byCssSelector
-import com.codeborne.selenide.Selectors.byText
-import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.element
+import com.codeborne.selenide.SelenideElement
+import com.makrol.teamcity.ui.annotations.ImplicitCheck
+import com.makrol.teamcity.ui.annotations.LocalizedElement
 import com.makrol.teamcity.ui.common.ComplexUiElement
 import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.elements.user.menu.UserMenu
+import com.makrol.teamcity.utilities.helpers.selenide.assertVisibility
+import com.makrol.teamcity.utilities.helpers.selenide.createElementByLocalizedText
+import com.makrol.teamcity.utilities.localization.Language
+import com.makrol.teamcity.utilities.localization.TextDomAttribute
 
 class Header : ComplexUiElement(byCssSelector(".ring-header-header")) {
     fun getUserMenu(): UserMenu {
         return userMenu
     }
 
-    private val projectsLinkContainer = Selenide.element(byText("Projects"))
+    fun assertAddProjectButtonVisibility(isVisible: Boolean) {
+        addProjectButton.assertVisibility(isVisible)
+    }
 
-    private val changesLinkContainer = Selenide.element(byText("Changes"))
+    fun assertAdminLinkVisibility(isVisible: Boolean) {
+        administrationLink.assertVisibility(isVisible)
+    }
 
-    private val agentsLinkContainer = Selenide.element(byText("Agents"))
+    @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Text, "Projects")
+    private val projectsLinkContainer: SelenideElement = this.createElementByLocalizedText(this::projectsLinkContainer)
 
-    private val queueLinkContainer = Selenide.element(byText("Queue"))
+    private val addProjectButton = element(byCssSelector("[aria-label='Create subproject']"))
 
-    private val helpButton = Selenide.element(byCssSelector("[title='Help']"))
+    @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Text, "Changes")
+    private val changesLinkContainer: SelenideElement = this.createElementByLocalizedText(this::changesLinkContainer)
 
-    private val administrationLink =
-        Selenide.element(byCssSelector("[data-hint-container-id='header-administration-link']"))
+    @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Text, "Agents")
+    private val agentsLinkContainer: SelenideElement = this.createElementByLocalizedText(this::agentsLinkContainer)
+
+    @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Text, "Queue")
+    private val queueLinkContainer: SelenideElement = this.createElementByLocalizedText(this::queueLinkContainer)
+
+    @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Title, "Help")
+    private val helpButton: SelenideElement = this.createElementByLocalizedText(this::helpButton)
+
+    private val administrationLink = element(byCssSelector("[data-hint-container-id='header-administration-link']"))
 
     private val userMenu = UserMenu()
 }

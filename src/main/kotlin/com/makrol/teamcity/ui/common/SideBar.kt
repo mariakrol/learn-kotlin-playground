@@ -3,6 +3,7 @@ package com.makrol.teamcity.ui.common
 import com.codeborne.selenide.CollectionCondition
 import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.Selenide
+import com.makrol.teamcity.utilities.localization.LocalizedItem
 import org.openqa.selenium.By
 
 //ToDo: get rid or copy/paste -> Menu

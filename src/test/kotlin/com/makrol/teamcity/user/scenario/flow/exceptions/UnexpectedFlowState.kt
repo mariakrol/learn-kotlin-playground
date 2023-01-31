@@ -1,4 +1,4 @@
-package com.makrol.teamcity.test.user.scenario.flow.exceptions
+package com.makrol.teamcity.user.scenario.flow.exceptions
 
 class UnexpectedFlowState : RuntimeException {
     constructor() : super()

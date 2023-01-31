@@ -1,9 +1,9 @@
 package com.makrol.teamcity.ui.teamcity.page.objects.loggedin.profile.page.elements
 
 import com.makrol.teamcity.ui.annotations.LocalizedElement
-import com.makrol.teamcity.ui.common.LocalizedItem
 import com.makrol.teamcity.utilities.configuration.ConfigurationProvider
 import com.makrol.teamcity.utilities.localization.Language
+import com.makrol.teamcity.utilities.localization.LocalizedItem
 import com.makrol.teamcity.utilities.localization.TextDomAttribute
 
 enum class ProfileSideBarItem : LocalizedItem {

@@ -1,4 +1,4 @@
-package com.makrol.teamcity.test.user.scenario.flow
+package com.makrol.teamcity.user.scenario.flow
 
 import com.makrol.teamcity.ui.teamcity.page.objects.TeamCityPage
 import mu.KotlinLogging
@@ -8,6 +8,8 @@ abstract class TeamCityUiFlow(protected val assertions: SoftAssertions, protecte
     constructor(previousFlow: TeamCityUiFlow) : this(previousFlow.assertions, previousFlow.currentPage) {
         this.currentPage = previousFlow.currentPage
     }
+
+    abstract fun validateCurrentPage(): TeamCityUiFlow
 
     protected val logger = KotlinLogging.logger { }
 }
