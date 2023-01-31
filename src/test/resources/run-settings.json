@@ -1,0 +1,6 @@
+{
+  "teamCityInstance": {
+    "host": "localhost:8111",
+    "token": "TOKEN"
+  }
+}

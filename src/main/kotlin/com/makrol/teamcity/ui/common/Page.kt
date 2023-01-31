@@ -1,7 +1,7 @@
 package com.makrol.teamcity.ui.common
 
 import com.codeborne.selenide.Selenide
-import com.makrol.teamcity.utilities.constructByParameterlessCtor
+import com.makrol.teamcity.utilities.helpers.constructByParameterlessCtor
 import java.net.URL
 
 abstract class Page {

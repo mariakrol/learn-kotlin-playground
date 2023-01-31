@@ -27,3 +27,15 @@ I will be able to play with Selenide-related features, emails as well as API gen
 I added the concept of "flow" to hide direct interaction with UI components from test.
 A flow should describe steps of a user scenario in a readable way.
 "Flow" is not page related entity, it is focused on user scenarios, so it can use several pages as well as part of a single page.
+
+### PageObjects
+#### Complex UI elements
+Since UI of the selected system is quite complex, need to split pages on logical parts.
+So, PageObject it is not only model of a page, but also it can describe model of a page's part.
+Need to keep consistence between DOM and PageObjects structure, so child of a complex 
+PageObject have to be searched in the related DOM node.
+
+#### URLs to pages
+We need to be able to use the test system in any environment.
+In this case, we will have dynamic hosts, which must be specified in a config and a path to a page that should not depend on where the system is deployed.
+The custom annotation @PageUrlPath chains the path and associated page model. 
