@@ -1,5 +1,6 @@
 package com.makrol.teamcity.utilities.helpers.selenide
 
+import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Selectors.*
 import com.codeborne.selenide.Selenide.element
 import com.codeborne.selenide.SelenideElement
@@ -20,10 +21,16 @@ fun UiElementContainer.createElementByLocalizedText(
     val locator = getLocator(localizationInfo, xPathPattern)
 
     if (this is ComplexUiElement) {
-        return this.innerElement.find(locator)
+        this.waitVisibleAndFindInner(locator)
     }
 
     return element(locator)
+}
+
+private fun ComplexUiElement.waitVisibleAndFindInner(locator: By): SelenideElement {
+    this.innerElement.should(Condition.exist)
+
+    return this.innerElement.`$`(locator)
 }
 
 private fun getLocator(localizationInfo: LocalizedElement, xPathPattern: String = ""): By {

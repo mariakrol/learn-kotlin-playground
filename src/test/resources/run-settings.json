@@ -3,5 +3,11 @@
     "host": "localhost:8111",
     "token": "TOKEN",
     "language": "En"
+  },
+  "testRepo": {
+    "url": "Repo-Url",
+    "user": "user",
+    "password": "password",
+    "mainBranch": "refs/heads/main"
   }
 }

@@ -100,14 +100,3 @@ private fun checkElementText(property: KProperty1<out Any, *>, container: Any) {
         textElement.should(getTextAssertionCondition(localizationInfo.domAttribute, localizationInfo.text))
     }
 }
-
-private fun Any.asSelenideElement(): SelenideElement {
-    if (this is SelenideElement) {
-        return this
-    }
-    if (this is ComplexUiElement) {
-        return this.innerElement
-    }
-
-    throw IllegalArgumentException("Cannot convert object $this of type ${this::class} to SelenideElement")
-}

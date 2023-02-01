@@ -15,5 +15,7 @@ class ConfigurationProvider {
         }
 
         val teamCity = config.teamCityInstance
+
+        val testRepo = config.testRepo
     }
 }
