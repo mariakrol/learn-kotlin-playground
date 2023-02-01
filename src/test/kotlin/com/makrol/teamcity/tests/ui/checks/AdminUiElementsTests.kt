@@ -17,7 +17,7 @@ class AdminUiElementsTests : TeamCityTestsBase() {
     @ParameterizedTest(name = "{index} => is admin rights = {0}")
     @ValueSource(booleans = [true, false])
     fun adminUserUi(isAdminRights: Boolean) {
-        userToBeLoggedIn = userApi.createUser(isAdminRights = isAdminRights)
+        userToBeLoggedIn = userApi.createUser(isAdminRights)
 
         AnonymousTeamCityFlow
             .start(assertions)
