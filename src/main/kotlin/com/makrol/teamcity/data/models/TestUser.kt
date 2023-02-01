@@ -6,7 +6,7 @@ class TestUser(val user: User, var password: String, val isAdmin: Boolean) {
 
     val userName: String = user.username ?: ""
     val name: String = user.name ?: ""
-    private val email: String = user.email ?: ""
+    val email: String = user.email ?: ""
 
     fun toProfileInfo(): ProfileInfo {
         return ProfileInfo(userName, name, email)

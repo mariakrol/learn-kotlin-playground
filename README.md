@@ -159,3 +159,11 @@ it under version control.
 - [ ] Add generation as a task and integrate it into the build process
 - [ ] Remove the generated client from version control.
 
+### Email processing
+To implement checks of emails for the playground I choose GreenMail. It quite convenient tool and it allows to up SMTP
+server on the fly just before a test.
+
+**TODO:**
+- [ ] Setup SMTP in TeamCity automatically before a test
+- [ ] Wrap GreenMail to be able to change the tool 
+

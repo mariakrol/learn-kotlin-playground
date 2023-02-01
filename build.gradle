@@ -43,6 +43,9 @@ dependencies {
     //UI models implementation
     implementation("com.codeborne:selenide:6.10.1")
 
+    //Email
+    implementation("com.icegreen:greenmail-junit5:2.0.0-alpha-3")
+
     //Tests organization
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-params:${junitVersion}")

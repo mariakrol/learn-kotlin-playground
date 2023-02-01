@@ -22,6 +22,16 @@ class ProfileSpaceTeamCityFlow : AuthorizedTeamCityFlow {
         return this
     }
 
+    @Step("Check message is visible on Profile page")
+    fun validateSuccessMessage(expectedMessage: String): ProfileSpaceTeamCityFlow {
+        val actualMessage = getProfilePage().getSuccessMessage()
+        assertions.assertThat(actualMessage)
+            .describedAs("Label with status of reset password operation")
+            .isEqualTo(expectedMessage)
+
+        return this
+    }
+
     private fun getProfilePage(): ProfilePage {
         return currentPage as ProfilePage
     }

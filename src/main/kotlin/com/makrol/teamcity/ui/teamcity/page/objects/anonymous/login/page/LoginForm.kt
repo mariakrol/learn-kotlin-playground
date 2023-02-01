@@ -18,6 +18,10 @@ class LoginForm : ComplexUiElement(By.className("loginForm")) {
         loginButton.click()
     }
 
+    fun resetPassword() {
+        resetPasswordLink.click()
+    }
+
     @ImplicitCheck(isVisible = true)
     private val userNameField = getChild(byId("username"))
 

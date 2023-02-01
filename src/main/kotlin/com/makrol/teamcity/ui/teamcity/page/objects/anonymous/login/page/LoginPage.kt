@@ -3,6 +3,7 @@ package com.makrol.teamcity.ui.teamcity.page.objects.anonymous.login.page
 import com.makrol.teamcity.ui.annotations.ImplicitCheck
 import com.makrol.teamcity.ui.annotations.PageUrlPath
 import com.makrol.teamcity.ui.teamcity.page.objects.TeamCityPage
+import com.makrol.teamcity.ui.teamcity.page.objects.anonymous.ForgotPasswordPage
 import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.projects.page.ProjectsPage
 
 @PageUrlPath("/login.html")
@@ -11,6 +12,10 @@ class LoginPage : TeamCityPage() {
         loginForm.fillCredentials(userName, password)
 
         return open { loginForm.login() }
+    }
+
+    fun resetPassword(): ForgotPasswordPage {
+        return open { loginForm.resetPassword() }
     }
 
     @ImplicitCheck(isVisible = true)

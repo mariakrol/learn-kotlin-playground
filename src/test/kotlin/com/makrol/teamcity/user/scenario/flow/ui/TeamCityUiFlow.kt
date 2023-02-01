@@ -8,7 +8,9 @@ import mu.KotlinLogging
 import org.assertj.core.api.SoftAssertions
 import java.net.URL
 
-abstract class TeamCityUiFlow(protected val assertions: SoftAssertions, protected var currentPage: TeamCityPage) {
+abstract class TeamCityUiFlow(assertions: SoftAssertions, protected var currentPage: TeamCityPage) :
+    UserScenarioFlow(assertions) {
+
     constructor(previousFlow: TeamCityUiFlow) : this(previousFlow.assertions, previousFlow.currentPage) {
         this.currentPage = previousFlow.currentPage
     }
