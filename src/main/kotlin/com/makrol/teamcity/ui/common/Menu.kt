@@ -1,7 +1,8 @@
 package com.makrol.teamcity.ui.common
 
 import com.codeborne.selenide.ElementsCollection
-import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.element
+import com.codeborne.selenide.Selenide.elements
 import com.makrol.teamcity.utilities.localization.LocalizedItem
 import org.openqa.selenium.By
 
@@ -12,7 +13,7 @@ abstract class Menu<TMenuItem>(
     private val itemLocator: By
 ) where TMenuItem : Enum<TMenuItem>, TMenuItem : LocalizedItem {
 
-    protected val menuExpander = Selenide.element(menuLocator)
+    protected val menuExpander = element(menuLocator)
 
     fun clickOnItem(item: TMenuItem) {
         expand()
@@ -30,6 +31,6 @@ abstract class Menu<TMenuItem>(
     }
 
     private fun getItems(): ElementsCollection {
-        return Selenide.elements(itemLocator)
+        return elements(itemLocator)
     }
 }

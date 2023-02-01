@@ -1,7 +1,7 @@
 package com.makrol.teamcity.ui.teamcity.page.objects.loggedin.profile.page
 
 import com.codeborne.selenide.Selectors.byTagName
-import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.element
 import com.makrol.teamcity.data.models.ProfileInfo
 import com.makrol.teamcity.ui.annotations.ImplicitCheck
 import com.makrol.teamcity.ui.annotations.PageUrlPath
@@ -31,7 +31,7 @@ class ProfilePage : LoggedInPage(), AvailableByUserMenu {
     }
 
     @ImplicitCheck(isVisible = true)
-    private val headerLabel = Selenide.element(byTagName("h1"))
+    private val headerLabel = element(byTagName("h1"))
 
     @ImplicitCheck(isVisible = true)
     private val sideBar = ProfileSideBar()

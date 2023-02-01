@@ -7,11 +7,14 @@ import com.makrol.teamcity.user.scenario.flow.AnonymousTeamCityFlow
 import com.makrol.teamcity.user.scenario.flow.email.MailboxFlow
 import com.makrol.teamcity.utilities.configuration.ConfigurationProvider
 import io.qameta.allure.Feature
+import io.qameta.allure.Owner
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
+@Owner("makrol")
+@DisplayName("Registered user can reset password")
 class ResetPasswordTests : TeamCityTestsBase() {
     //ToDo: Localization?
     private val resetPasswordMailSubject = "Reset your TeamCity password"
@@ -26,7 +29,7 @@ class ResetPasswordTests : TeamCityTestsBase() {
 
     @Feature("ResetPassword")
     @Feature("Login")
-    @DisplayName("with registered email address should lead to sending of email with reset link regardless admin rights")
+    @DisplayName("by following reset link in email regardless admin rights")
     @ParameterizedTest(name = "{index} => is admin rights = {0}")
     @ValueSource(booleans = [true, false])
     fun registeredUserShouldBeAbleToResetPassword(isAdmin: Boolean) {

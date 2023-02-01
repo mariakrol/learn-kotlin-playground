@@ -6,9 +6,8 @@ import com.makrol.teamcity.ui.annotations.LocalizedElement
 import com.makrol.teamcity.ui.common.ComplexUiElement
 import com.makrol.teamcity.utilities.localization.Language
 import com.makrol.teamcity.utilities.localization.TextDomAttribute
-import org.openqa.selenium.By
 
-class LoginForm : ComplexUiElement(By.className("loginForm")) {
+class LoginForm : ComplexUiElement(byClassName("loginForm")) {
     fun fillCredentials(userName: String, password: String) {
         userNameField.value = userName
         passwordField.value = password

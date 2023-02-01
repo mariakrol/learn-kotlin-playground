@@ -2,7 +2,7 @@ package com.makrol.teamcity.ui.common
 
 import com.codeborne.selenide.CollectionCondition
 import com.codeborne.selenide.ElementsCollection
-import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.elements
 import com.makrol.teamcity.utilities.localization.LocalizedItem
 import org.openqa.selenium.By
 
@@ -17,7 +17,7 @@ abstract class SideBar<TSideBarItem>(
     open fun clickOnItem(item: TSideBarItem) {
         val text = item.getLocalization().text
         getItems()
-            .first { i -> i.text() == text }
+            .first { it.text() == text }
             .click()
     }
 
@@ -31,6 +31,6 @@ abstract class SideBar<TSideBarItem>(
     }
 
     private fun getItems(): ElementsCollection {
-        return Selenide.elements(itemLocator)
+        return elements(itemLocator)
     }
 }
