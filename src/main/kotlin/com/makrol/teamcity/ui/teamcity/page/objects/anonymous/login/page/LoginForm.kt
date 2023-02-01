@@ -2,7 +2,10 @@ package com.makrol.teamcity.ui.teamcity.page.objects.anonymous.login.page
 
 import com.codeborne.selenide.Selectors.*
 import com.makrol.teamcity.ui.annotations.ImplicitCheck
+import com.makrol.teamcity.ui.annotations.LocalizedElement
 import com.makrol.teamcity.ui.common.ComplexUiElement
+import com.makrol.teamcity.utilities.localization.Language
+import com.makrol.teamcity.utilities.localization.TextDomAttribute
 import org.openqa.selenium.By
 
 class LoginForm : ComplexUiElement(By.className("loginForm")) {
@@ -22,8 +25,10 @@ class LoginForm : ComplexUiElement(By.className("loginForm")) {
     private val passwordField = getChild(byId("password"))
 
     @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Value, "Log in")
     private val loginButton = getChild(byClassName("loginButton"))
 
     @ImplicitCheck(isVisible = true)
+    @LocalizedElement(Language.En, TextDomAttribute.Text, "Reset password")
     private val resetPasswordLink = getChild(byCssSelector("#resetPasswordContainer a"))
 }

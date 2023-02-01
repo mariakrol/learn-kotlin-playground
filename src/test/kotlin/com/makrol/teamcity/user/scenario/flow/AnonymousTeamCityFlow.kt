@@ -4,7 +4,6 @@ import com.makrol.teamcity.data.models.TestUser
 import com.makrol.teamcity.ui.teamcity.page.objects.TeamCityPage
 import com.makrol.teamcity.ui.teamcity.page.objects.anonymous.login.page.LoginPage
 import com.makrol.teamcity.user.scenario.flow.exceptions.UnexpectedFlowState
-import com.makrol.teamcity.utilities.helpers.selenide.validateElementsVisibility
 import io.qameta.allure.Step
 import org.assertj.core.api.SoftAssertions
 
@@ -27,7 +26,7 @@ class AnonymousTeamCityFlow private constructor(assertions: SoftAssertions, curr
     @Step("Validate elements on currently open page")
     override fun validateCurrentPage(): AnonymousTeamCityFlow {
         logger.info("Check elements visibility for page: ${currentPage::class.simpleName}")
-        currentPage.validateElementsVisibility()
+        validatePage()
 
         return this
     }

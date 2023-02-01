@@ -5,7 +5,6 @@ import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.LoggedInPage
 import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.elements.user.menu.UserMenuItem
 import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.profile.page.ProfilePage
 import com.makrol.teamcity.user.scenario.flow.exceptions.UnexpectedFlowState
-import com.makrol.teamcity.utilities.helpers.selenide.validateElementsVisibility
 import io.qameta.allure.Step
 
 abstract class AuthorizedTeamCityFlow : TeamCityUiFlow {
@@ -31,15 +30,17 @@ abstract class AuthorizedTeamCityFlow : TeamCityUiFlow {
     @Step("Validate elements on currently open page")
     override fun validateCurrentPage(): AuthorizedTeamCityFlow {
         logger.info("Check elements visibility for page: ${currentPage::class.simpleName}")
-        currentPage.validateElementsVisibility()
+        validatePage()
 
         return this
     }
 
     @Step("Check Add project button visibility in header")
     fun checkAddProjectButtonVisibilityInHeader(): AuthorizedTeamCityFlow {
-        logger.info("The logged-in user has${(if (user.isAdmin) "" else " no")} admin rights, "
-                + "so expected button to be ${(if (user.isAdmin) "visible" else "hidden")}")
+        logger.info(
+            "The logged-in user has${(if (user.isAdmin) "" else " no")} admin rights, "
+                    + "so expected button to be ${(if (user.isAdmin) "visible" else "hidden")}"
+        )
 
         getLoggedInPage().header
             .assertAddProjectButtonVisibility(user.isAdmin)
@@ -49,8 +50,10 @@ abstract class AuthorizedTeamCityFlow : TeamCityUiFlow {
 
     @Step("Check Admin link visibility in header")
     fun checkAdminLinkVisibility(): AuthorizedTeamCityFlow {
-        logger.info("The logged-in user has${(if (user.isAdmin) "" else " no")} admin rights, " +
-                "so expected Admin link to be ${(if (user.isAdmin) "visible" else "hidden")}")
+        logger.info(
+            "The logged-in user has${(if (user.isAdmin) "" else " no")} admin rights, " +
+                    "so expected Admin link to be ${(if (user.isAdmin) "visible" else "hidden")}"
+        )
 
         getLoggedInPage().header
             .assertAdminLinkVisibility(user.isAdmin)

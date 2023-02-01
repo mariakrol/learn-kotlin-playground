@@ -134,6 +134,11 @@ private val addProjectButton: SelenideElement =
     this.createElementByLocalizedText(this::addProjectButton, ".//a[.//*[text()='%s']]")
 ```
 
+##### Semi-implicit check of text
+Since many elements which are visible on page all the time can contain text, I want to check it as well as existence. 
+So, in case element is equipped with `@LocalizedElement` annotation *and* with `@ImplicitCheck(isVisible = true)` it
+would be checked in the extension method `validateTextElements()` of `UiElementContainer`.
+
 ### Generating and wrapping API
 I faced several problems when generating the API client for TeamCity because the API has numerous methods and 
 associated models. I tried to generate the client using the online Swagger generator to practice with usages separately,
