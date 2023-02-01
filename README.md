@@ -109,7 +109,7 @@ is a class, and it contains a dynamic postfix (calculated by hash):
   </span>
 </a>
 ```
-In this case, the locator (both CSS and xPath) will be quite complex. The name of a button should be stable, but since 
+In this case, the locator (both CSS and XPath) will be quite complex. The name of a button should be stable, but since 
 we decided to support localisation, it would be completely wrong to explicitly create a locator based on text. To solve 
 the problem, I use the annotation:
 ```Kotlin 
@@ -120,12 +120,12 @@ method, which creates the element based on text, is an extension method for the 
 implemented by `Page` and `ComplexUiElement`:
 ```Kotlin
 fun UiElementContainer.createElementByLocalizedText(
-  selfAnnotationSource: KAnnotatedElement, xPathPattern: String = ""
+  selfAnnotationSource: KAnnotatedElement, XPathPattern: String = ""
 ): SelenideElement
 ```
-It gets the property as `KAnnotatedElement` to get the annotation and the xPath pattern as an optional parameter. Many 
+It gets the property as `KAnnotatedElement` to get the annotation and the XPath pattern as an optional parameter. Many 
 elements on the TeamCity UI contain nested elements with text, so we may want to achieve a button, but will get an 
-inner div. To solve this we can use xPath (CSS will not help with inner text).
+inner div. To solve this we can use XPath (CSS will not help with inner text).
 
 **Example of usage:**
 ```Kotlin
@@ -133,6 +133,10 @@ inner div. To solve this we can use xPath (CSS will not help with inner text).
 private val addProjectButton: SelenideElement =
     this.createElementByLocalizedText(this::addProjectButton, ".//a[.//*[text()='%s']]")
 ```
+This produces a lot of boilerplate code, so need to rethink to reduce it.
+
+**TODO:**
+- [ ] Rethink initialization by localized text to reduce boilerplate code
 
 ##### Semi-implicit check of text
 Since many elements which are visible on page all the time can contain text, I want to check it as well as existence. 
