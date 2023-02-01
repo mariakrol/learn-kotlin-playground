@@ -8,6 +8,10 @@ import java.net.URL
 import kotlin.reflect.KAnnotatedElement
 
 abstract class TeamCityPage : Page() {
+    fun getExpectedUrl(): URL {
+        return getTeamCityPageUrl(this::class)
+    }
+
     companion object {
         inline fun <reified TTeamCityPage : TeamCityPage> open(): TTeamCityPage {
             return open(getTeamCityPageUrl<TTeamCityPage>())
