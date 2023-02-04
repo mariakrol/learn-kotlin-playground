@@ -12,15 +12,16 @@ import java.net.URL
 class ProjectsApiWrapper : BaseApiClient() {
     private val gitVcsName = "jetbrains.git"
 
-    private val projectApi: ProjectApi = ProjectApi(baseClient)
-    private val buildTypeApi: BuildTypeApi = BuildTypeApi(baseClient)
-    private val vcsRootApi: VcsRootApi = VcsRootApi(baseClient)
+    private val projectApi: ProjectApi = ProjectApi(host, baseClient)
+    private val buildTypeApi: BuildTypeApi = BuildTypeApi(host, baseClient)
+    private val vcsRootApi: VcsRootApi = VcsRootApi(host, baseClient)
 
     fun createSimpleTeamCityProject(repoData: TestRepo): TestTeamCityProject {
-        val createdProject: Project = createProject()
-        val createdRoot: VcsRoot =
-            createVcsRoot(repoData.url, repoData.user, repoData.password, repoData.mainBranch, createdProject.id)
+        val createdProject = createProject()
+        val createdRoot =
+            createVcsRoot(repoData.url, repoData.user, repoData.password, repoData.mainBranch, createdProject.id!!)
         val createdBuildType: BuildType = createBuildType(createdProject, createdRoot)
+
         return TestTeamCityProject(createdProject, createdBuildType, createdRoot)
     }
 
@@ -31,8 +32,7 @@ class ProjectsApiWrapper : BaseApiClient() {
     }
 
     private fun createProject(): Project {
-        val newProject = NewProjectDescription()
-        newProject.name("simple_tc_project".appendRandomNumericPostfix())
+        val newProject = NewProjectDescription(name = "simple_tc_project".appendRandomNumericPostfix())
 
         return projectApi.addProject(newProject)
     }
@@ -43,73 +43,64 @@ class ProjectsApiWrapper : BaseApiClient() {
         repoPassword: String,
         branch: String,
         projectId: String
-    ): VcsRoot {
+    ): VcsMinusRoot {
         val rootId: String = "vcsRoot".appendRandomNumericPostfix()
 
-        val newRoot = VcsRoot()
-        newRoot.id = rootId
-        newRoot.name = rootId
-        newRoot.projectLocator = "id:$projectId"
-        newRoot.vcsName = gitVcsName
-        newRoot.properties = Properties()
-        newRoot.properties.addProperty(
-            Pair("agentCleanFilesPolicy", "ALL_UNTRACKED"),
-            Pair("agentCleanPolicy", "ON_BRANCH_CHANGE"),
-            Pair("branch", branch),
-            Pair("teamcity:branchSpec", "+:*"),
-            Pair("url", repoUrl.toString()),
-            Pair("usernameStyle", "USERID"),
-            Pair("user", repoUser),
-            Pair("password", repoPassword)
+        val newRoot = VcsMinusRoot(
+            id = rootId,
+            name = rootId,
+            projectLocator = "id:$projectId",
+            vcsName = gitVcsName,
+            properties = Properties(
+                property = listOf(
+                    Pair("agentCleanFilesPolicy", "ALL_UNTRACKED").toProperty(),
+                    Pair("agentCleanPolicy", "ON_BRANCH_CHANGE").toProperty(),
+                    Pair("branch", branch).toProperty(),
+                    Pair("teamcity:branchSpec", "+:*").toProperty(),
+                    Pair("url", repoUrl.toString()).toProperty(),
+                    Pair("usernameStyle", "USERID").toProperty(),
+                    Pair("authentication", "Anonymous").toProperty()
+                )
+            )
         )
-        return vcsRootApi.addVcsRoot(newRoot, null)
+        return vcsRootApi.addVcsRoot(body = newRoot)
     }
 
-    private fun createBuildType(createdProject: Project, createdRoot: VcsRoot): BuildType {
+    private fun createBuildType(createdProject: Project, createdRoot: VcsMinusRoot): BuildType {
         val typeId = "builtType".appendRandomNumericPostfix()
-        val newBuildType = BuildType()
-        newBuildType.id = typeId
-        newBuildType.name = typeId
-        newBuildType.project = createdProject
-        newBuildType.steps = createStepsWithGradle()
-        newBuildType.triggers = createVcsTrigger()
-        val vcsRootEntry = VcsRootEntry()
-        vcsRootEntry.vcsRoot = createdRoot
-        val vcsRootEntries = VcsRootEntries()
-        vcsRootEntries.addVcsRootEntryItem(vcsRootEntry)
-        newBuildType.vcsRootEntries = vcsRootEntries
+        val newBuildType = BuildType(
+            id = typeId,
+            name = typeId,
+            project = createdProject,
+            steps = createStepsWithGradle(),
+            triggers = createVcsTrigger(),
+            vcsRootEntries = VcsMinusRootMinusEntries(vcsRootEntry = listOf(VcsMinusRootMinusEntry(vcsRoot = createdRoot)))
+        )
 
-        return buildTypeApi.createBuildType(newBuildType, "")
+        return buildTypeApi.createBuildType(body = newBuildType)
     }
 
     private fun createStepsWithGradle(): Steps {
-        val runnerType = "gradle-runner"
-        val gradleStep = Step()
-        gradleStep.id = "step_1"
-        gradleStep.type = runnerType
-        gradleStep.properties = Properties()
-        gradleStep.properties.addProperty(
-            Pair("teamcity.step.mode", "default"),
-            Pair("ui.gradleRunner.gradle.tasks.names", "clean build"),
-            Pair("ui.gradleRunner.gradle.wrapper.path", ""),
-            Pair("ui.gradleRunner.gradle.wrapper.useWrapper", "true")
+        val properties = Properties(
+            property = listOf(
+                Pair("teamcity.step.mode", "default").toProperty(),
+                Pair("ui.gradleRunner.gradle.tasks.names", "clean build").toProperty(),
+                Pair("ui.gradleRunner.gradle.wrapper.path", "").toProperty(),
+                Pair("ui.gradleRunner.gradle.wrapper.useWrapper", "true").toProperty()
+            )
         )
 
-        val steps = Steps()
-        steps.addStepItem(gradleStep)
+        val gradleStep = Step(
+            id = "step_1",
+            type = "gradle-runner",
+            properties = properties
+        )
 
-        return steps
+        return Steps(step = listOf(gradleStep))
     }
 
     private fun createVcsTrigger(): Triggers {
-        val trigger = Trigger()
-        trigger.id("tr1")
-        trigger.type = "vcsTrigger"
-
-        val triggers = Triggers()
-        triggers.addTriggerItem(trigger)
-
-        return triggers
+        return Triggers(trigger = listOf(Trigger(id = "tr1", type = "vcsTrigger")))
     }
 
     private fun deleteProject(projectId: String) {
@@ -123,14 +114,8 @@ class ProjectsApiWrapper : BaseApiClient() {
     private fun deleteVcsRoot(rootId: String) {
         vcsRootApi.deleteVcsRoot(rootId)
     }
+}
 
-    private fun Properties.addProperty(vararg pairs: Pair<String, String>) {
-        for (pair in pairs) {
-            val newProperty = Property()
-            newProperty.name = pair.first
-            newProperty.value = pair.second
-
-            this.addPropertyItem(newProperty)
-        }
-    }
+fun Pair<String, String>.toProperty(): Property {
+    return Property(name = this.first, value = this.second)
 }

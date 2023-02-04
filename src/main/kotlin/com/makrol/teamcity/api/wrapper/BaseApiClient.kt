@@ -1,15 +1,18 @@
 package com.makrol.teamcity.api.wrapper
 
-import com.makrol.teamcity.api.swagger.client.ApiClient
 import com.makrol.teamcity.utilities.configuration.ConfigurationProvider
+import okhttp3.OkHttpClient
 
 open class BaseApiClient {
-    protected val baseClient: ApiClient = ApiClient()
+    companion object {
+        val host = ConfigurationProvider.teamCity.host.toString()
+        val baseClient: OkHttpClient = getApiClient(AuthorizationInterceptor())
 
-    init {
-        baseClient.basePath = ConfigurationProvider.teamCity.host.toString()
-        baseClient.addDefaultHeader("Content-Type", "application/xml")
-        baseClient.addDefaultHeader("Authorization", "Bearer " + ConfigurationProvider.teamCity.token)
+        private fun getApiClient(authorizationInterceptor: AuthorizationInterceptor): OkHttpClient {
+            return OkHttpClient.Builder()
+                .addInterceptor(authorizationInterceptor)
+                .build()
+        }
     }
 }
 

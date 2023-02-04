@@ -2,6 +2,7 @@ plugins {
     id "java"
     id "org.jetbrains.kotlin.jvm" version "1.7.20"
     id "io.qameta.allure" version "2.9.3"
+    id "org.openapi.generator" version "6.2.1"
 }
 
 group "com.makrol"
@@ -32,13 +33,11 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
-    //open api client generation
-    implementation("io.gsonfire:gson-fire:1.8.5")
-    implementation("com.squareup.okhttp:okhttp:${okhttpVersion}")
-    implementation("com.squareup.okhttp:logging-interceptor:${okhttpVersion}")
-    implementation("javax.annotation:javax.annotation-api:1.3.2")
-    implementation("io.swagger:swagger-annotations:1.5.24")
-    implementation("org.threeten:threetenbp:1.3.6")
+    //OpenApi generation
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
+
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     //UI models implementation
     implementation("com.codeborne:selenide:6.10.1")
@@ -67,8 +66,37 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
 }
 
+openApiGenerate {
+    generatorName = "kotlin"
+    inputSpec = "$rootDir/src/test/resources/teamCityApi.json"
+    outputDir = "$buildDir/generated"
+    apiPackage = "com.makrol.teamcity.api.swagger.client.api"
+    invokerPackage = "com.makrol.teamcity.api.swagger.client.invoker"
+    modelPackage = "com.makrol.teamcity.api.swagger.client.model"
+    configOptions = [
+            dateLibrary: "java8",
+            library: "jvm-okhttp4",
+            moshiCodeGen: "false",
+            serializationLibrary: "jackson"
+    ]
+}
+
+sourceSets {
+    main.kotlin.srcDirs += "src/main/kotlin"
+    main.kotlin.srcDirs += "$buildDir/generated/src/main/kotlin"
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    dependsOn("openApiGenerate")
+    kotlinOptions.jvmTarget = "11"
+}
+
 test {
     useJUnitPlatform()
+
+    systemProperties = [
+            'selenide.headless': 'true'
+    ]
 }
 allure {
     version = "${allureVersion}"
