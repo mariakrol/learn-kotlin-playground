@@ -5,9 +5,8 @@
     "language": "En"
   },
   "testRepo": {
-    "url": "Repo-Url",
-    "user": "user",
-    "password": "password",
+    "url": "https://github.com/mariakrol/DummyTests",
+    "authenticationMode": "Anonymous",
     "mainBranch": "refs/heads/main"
   }
 }

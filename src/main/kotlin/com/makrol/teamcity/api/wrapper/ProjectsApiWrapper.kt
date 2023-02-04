@@ -5,6 +5,7 @@ import com.makrol.teamcity.api.swagger.client.api.ProjectApi
 import com.makrol.teamcity.api.swagger.client.api.VcsRootApi
 import com.makrol.teamcity.api.swagger.client.model.*
 import com.makrol.teamcity.data.models.TestTeamCityProject
+import com.makrol.teamcity.utilities.configuration.AuthenticationMode
 import com.makrol.teamcity.utilities.configuration.TestRepo
 import com.makrol.teamcity.utilities.helpers.appendRandomNumericPostfix
 import java.net.URL
@@ -19,7 +20,14 @@ class ProjectsApiWrapper : BaseApiClient() {
     fun createSimpleTeamCityProject(repoData: TestRepo): TestTeamCityProject {
         val createdProject = createProject()
         val createdRoot =
-            createVcsRoot(repoData.url, repoData.user, repoData.password, repoData.mainBranch, createdProject.id!!)
+            createVcsRoot(
+                repoData.url,
+                repoData.authenticationMode,
+                repoData.user,
+                repoData.password,
+                repoData.mainBranch,
+                createdProject.id!!
+            )
         val createdBuildType: BuildType = createBuildType(createdProject, createdRoot)
 
         return TestTeamCityProject(createdProject, createdBuildType, createdRoot)
@@ -39,30 +47,37 @@ class ProjectsApiWrapper : BaseApiClient() {
 
     private fun createVcsRoot(
         repoUrl: URL,
+        authenticationMode: AuthenticationMode,
         repoUser: String,
         repoPassword: String,
         branch: String,
         projectId: String
     ): VcsMinusRoot {
         val rootId: String = "vcsRoot".appendRandomNumericPostfix()
+        val properties = mutableListOf(
+            Pair("agentCleanFilesPolicy", "ALL_UNTRACKED").toProperty(),
+            Pair("agentCleanPolicy", "ON_BRANCH_CHANGE").toProperty(),
+            Pair("branch", branch).toProperty(),
+            Pair("teamcity:branchSpec", "+:*").toProperty(),
+            Pair("url", repoUrl.toString()).toProperty(),
+            Pair("usernameStyle", "USERID").toProperty(),
+            Pair("authentication", authenticationMode.toString()).toProperty()
+        )
+
+        if (authenticationMode != AuthenticationMode.Anonymous) {
+            properties += Pair("username", repoUser).toProperty()
+            properties += Pair("password", repoPassword).toProperty()
+        }
+
 
         val newRoot = VcsMinusRoot(
             id = rootId,
             name = rootId,
             projectLocator = "id:$projectId",
             vcsName = gitVcsName,
-            properties = Properties(
-                property = listOf(
-                    Pair("agentCleanFilesPolicy", "ALL_UNTRACKED").toProperty(),
-                    Pair("agentCleanPolicy", "ON_BRANCH_CHANGE").toProperty(),
-                    Pair("branch", branch).toProperty(),
-                    Pair("teamcity:branchSpec", "+:*").toProperty(),
-                    Pair("url", repoUrl.toString()).toProperty(),
-                    Pair("usernameStyle", "USERID").toProperty(),
-                    Pair("authentication", "Anonymous").toProperty()
-                )
-            )
+            properties = Properties(property = properties)
         )
+
         return vcsRootApi.addVcsRoot(body = newRoot)
     }
 
