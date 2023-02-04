@@ -1,6 +1,5 @@
 package com.makrol.teamcity.user.scenario.flow.ui
 
-import com.makrol.teamcity.user.scenario.flow.ProjectsSpaceTeamCityFlow
 import io.qameta.allure.Step
 import kotlin.time.Duration
 

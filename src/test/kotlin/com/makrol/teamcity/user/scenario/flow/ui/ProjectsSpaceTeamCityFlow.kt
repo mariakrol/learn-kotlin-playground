@@ -1,8 +1,7 @@
-package com.makrol.teamcity.user.scenario.flow
+package com.makrol.teamcity.user.scenario.flow.ui
 
 import com.makrol.teamcity.data.models.TestUser
 import com.makrol.teamcity.ui.teamcity.page.objects.loggedin.projects.page.ProjectsPage
-import com.makrol.teamcity.user.scenario.flow.ui.BuildTeamCityFlow
 import io.qameta.allure.Step
 
 open class ProjectsSpaceTeamCityFlow : AuthorizedTeamCityFlow {

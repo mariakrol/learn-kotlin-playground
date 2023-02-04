@@ -1,7 +1,7 @@
 package com.makrol.teamcity.tests.ui.checks
 
 import com.makrol.teamcity.tests.TeamCityTestsBase
-import com.makrol.teamcity.user.scenario.flow.AnonymousTeamCityFlow
+import com.makrol.teamcity.user.scenario.flow.ui.AnonymousTeamCityFlow
 import io.qameta.allure.Feature
 import io.qameta.allure.Owner
 import org.junit.jupiter.api.DisplayName

@@ -1,4 +1,4 @@
-package com.makrol.teamcity.user.scenario.flow
+package com.makrol.teamcity.user.scenario.flow.ui
 
 import com.makrol.teamcity.data.models.TestUser
 import com.makrol.teamcity.ui.common.Page

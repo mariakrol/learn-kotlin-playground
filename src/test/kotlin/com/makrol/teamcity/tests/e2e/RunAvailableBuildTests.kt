@@ -3,7 +3,7 @@ package com.makrol.teamcity.tests.e2e
 import com.makrol.teamcity.api.wrapper.ProjectsApiWrapper
 import com.makrol.teamcity.data.models.TestTeamCityProject
 import com.makrol.teamcity.tests.TeamCityTestsBase
-import com.makrol.teamcity.user.scenario.flow.AnonymousTeamCityFlow
+import com.makrol.teamcity.user.scenario.flow.ui.AnonymousTeamCityFlow
 import com.makrol.teamcity.utilities.configuration.ConfigurationProvider
 import io.qameta.allure.Feature
 import io.qameta.allure.Owner
