@@ -1,9 +1,14 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id "java"
     id "org.jetbrains.kotlin.jvm" version "1.7.20"
     id "io.qameta.allure" version "2.9.3"
     id "org.openapi.generator" version "6.2.1"
 }
+
+sourceCompatibility = "18"
+targetCompatibility = "18"
 
 group "com.makrol"
 version "1.0-SNAPSHOT"
@@ -12,24 +17,17 @@ repositories {
     mavenCentral()
 }
 
+[compileKotlin, compileTestKotlin].forEach {
+    it.kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
 ext {
     allureVersion = "2.20.1"
     junitVersion = "5.9.1"
     hopliteVersion = "2.7.0"
     okhttpVersion = "2.7.5"
-}
-
-sourceCompatibility = "18"
-targetCompatibility = "18"
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
-}
-
-[compileKotlin, compileTestKotlin].forEach {
-    it.kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
