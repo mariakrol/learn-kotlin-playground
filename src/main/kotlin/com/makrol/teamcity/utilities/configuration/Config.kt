@@ -7,4 +7,4 @@ data class Config(val teamCityInstance: TeamCityTestInstance, val testRepo: Test
 
 data class TeamCityTestInstance(val host: URL, val token: String, val language: Language)
 
-data class TestRepo(val url: URL, val authenticationMode: AuthenticationMode, val user: String, val password: String, val mainBranch: String)
+data class TestRepo(val url: URL, val authenticationMode: AuthenticationMode, val user: String? = null, val password: String? = null, val mainBranch: String)

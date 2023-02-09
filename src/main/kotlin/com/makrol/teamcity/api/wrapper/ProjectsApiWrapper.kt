@@ -48,8 +48,8 @@ class ProjectsApiWrapper : BaseApiClient() {
     private fun createVcsRoot(
         repoUrl: URL,
         authenticationMode: AuthenticationMode,
-        repoUser: String,
-        repoPassword: String,
+        repoUser: String?,
+        repoPassword: String?,
         branch: String,
         projectId: String
     ): VcsMinusRoot {
@@ -129,8 +129,8 @@ class ProjectsApiWrapper : BaseApiClient() {
     private fun deleteVcsRoot(rootId: String) {
         vcsRootApi.deleteVcsRoot(rootId)
     }
-}
 
-fun Pair<String, String>.toProperty(): Property {
-    return Property(name = this.first, value = this.second)
+    private fun Pair<String, String?>.toProperty(): Property {
+        return Property(name = this.first, value = this.second)
+    }
 }
