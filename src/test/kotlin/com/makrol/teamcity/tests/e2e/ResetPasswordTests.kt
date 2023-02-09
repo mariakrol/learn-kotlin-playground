@@ -1,10 +1,8 @@
 package com.makrol.teamcity.tests.e2e
 
-import com.icegreen.greenmail.junit5.GreenMailExtension
-import com.icegreen.greenmail.util.ServerSetupTest
 import com.makrol.teamcity.tests.TeamCityTestsBase
-import com.makrol.teamcity.user.scenario.flow.ui.AnonymousTeamCityFlow
 import com.makrol.teamcity.user.scenario.flow.email.MailboxFlow
+import com.makrol.teamcity.user.scenario.flow.ui.AnonymousTeamCityFlow
 import com.makrol.teamcity.utilities.GreenMailService
 import com.makrol.teamcity.utilities.configuration.ConfigurationProvider
 import io.qameta.allure.Feature
@@ -24,10 +22,6 @@ class ResetPasswordTests : TeamCityTestsBase() {
 
     private var teamCityUrl = ConfigurationProvider.teamCity.host
 
-    @JvmField
-    @RegisterExtension //ToDo: Try to wrap greenMail to be able to change tool
-    var greenMail = GreenMailExtension(ServerSetupTest.SMTP)
-
     @Feature("ResetPassword")
     @Feature("Login")
     @DisplayName("by following reset link in email regardless admin rights")
@@ -41,7 +35,7 @@ class ResetPasswordTests : TeamCityTestsBase() {
             .goToPasswordReset()
             .initiatePasswordReset(userToBeLoggedIn)
         val resetPasswordUrl = MailboxFlow
-            .start(assertions, GreenMailService(greenMail))
+            .start(assertions, smtpService)
             .findLatestEmail(userToBeLoggedIn.email, resetPasswordMailSubject)
             .validateSubject(resetPasswordMailSubject)
             .getLinkFromBody(teamCityUrl)
@@ -49,5 +43,11 @@ class ResetPasswordTests : TeamCityTestsBase() {
             .completeReset(userToBeLoggedIn, resetPasswordUrl!!)
             .validateSuccessMessage(successfulResetLabel)
             .validateUserInfo()
+    }
+
+    companion object {
+        @JvmStatic
+        @RegisterExtension
+        var smtpService = GreenMailService()
     }
 }
