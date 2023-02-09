@@ -154,10 +154,12 @@ See additional information on a client generation [in the post](https://dev.to/m
 
 
 ### Email processing
-To implement checks of emails for the playground I choose GreenMail. It quite convenient tool and it allows to up SMTP
-server on the fly just before a test.
+A test interacts with custom abstraction under an SMTP service called `SmtpServiceWrapper`. The abstraction provides a
+method to get an email as an instance of `jakarta.mail.internet.MimeMessage`. The wrapper is added to be able to change
+SMTP service later without modification of `flows`.
+The specific realization of the abstraction which is currently used is `GreenMailService`. It wraps `GreenMailExtension`.
 
 **TODO:**
 - [ ] Setup SMTP in TeamCity automatically before a test
-- [ ] Wrap GreenMail to be able to change the tool 
+- [x] Wrap GreenMail to be able to change the tool 
 
