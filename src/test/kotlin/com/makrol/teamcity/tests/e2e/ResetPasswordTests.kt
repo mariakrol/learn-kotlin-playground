@@ -5,6 +5,7 @@ import com.icegreen.greenmail.util.ServerSetupTest
 import com.makrol.teamcity.tests.TeamCityTestsBase
 import com.makrol.teamcity.user.scenario.flow.ui.AnonymousTeamCityFlow
 import com.makrol.teamcity.user.scenario.flow.email.MailboxFlow
+import com.makrol.teamcity.utilities.GreenMailService
 import com.makrol.teamcity.utilities.configuration.ConfigurationProvider
 import io.qameta.allure.Feature
 import io.qameta.allure.Owner
@@ -40,8 +41,8 @@ class ResetPasswordTests : TeamCityTestsBase() {
             .goToPasswordReset()
             .initiatePasswordReset(userToBeLoggedIn)
         val resetPasswordUrl = MailboxFlow
-            .start(assertions, greenMail)
-            .findLatestEmail(userToBeLoggedIn.email)
+            .start(assertions, GreenMailService(greenMail))
+            .findLatestEmail(userToBeLoggedIn.email, resetPasswordMailSubject)
             .validateSubject(resetPasswordMailSubject)
             .getLinkFromBody(teamCityUrl)
         uiTestFlow
